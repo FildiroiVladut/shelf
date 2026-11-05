@@ -35,9 +35,9 @@ npm run dev
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Type-check and build for production |
+| Command           | What it does                         |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Start the dev server                 |
+| `npm run build`   | Type-check and build for production  |
 | `npm run preview` | Preview the production build locally |
-| `npm run lint` | Lint the code with ESLint |
+| `npm run lint`    | Lint the code with ESLint            |
