@@ -2,7 +2,7 @@
 
 Search books, put them on shelves, and see what you've read.
 
-**Status:** in development. Live demo coming soon.
+**Status:** in development. Live demo: https://shelf-ashen.vercel.app
 
 ## What it does
 
@@ -35,9 +35,12 @@ npm run dev
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Type-check and build for production |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` | Lint the code with ESLint |
+| Command                | What it does                         |
+| ---------------------- | ------------------------------------ |
+| `npm run dev`          | Start the dev server                 |
+| `npm run build`        | Type-check and build for production  |
+| `npm run preview`      | Preview the production build locally |
+| `npm run lint`         | Lint the code with ESLint            |
+| `npm run typecheck`    | Type-check without building          |
+| `npm run format`       | Format the code with Prettier        |
+| `npm run format:check` | Check formatting without writing     |
