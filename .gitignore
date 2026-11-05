@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local docs (not published)
+docs/
+CLAUDE.md
