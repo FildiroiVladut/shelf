@@ -17,7 +17,6 @@
 
 ## Checklist
 
-- [ ] I can explain every line in this diff
 - [ ] Lint, typecheck and build pass locally
 - [ ] Loading, error and empty states are handled (UI changes)
 - [ ] No secrets, no leftover `console.log`
