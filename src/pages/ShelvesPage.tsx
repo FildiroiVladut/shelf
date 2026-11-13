@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import { Link } from "react-router";
 import { z } from "zod";
 import { BookCover } from "../components/BookCover.tsx";
+import { RatingInput } from "../components/RatingInput.tsx";
 import { ShelfSelect } from "../components/ShelfSelect.tsx";
 import {
   SHELF_LABELS,
@@ -125,6 +126,8 @@ export function ShelvesPage() {
 }
 
 function ShelfBookItem({ book }: { book: ShelfBook }) {
+  const { setRating, setNotes } = useShelves();
+
   return (
     <li className="flex gap-3 p-3">
       <BookCover
@@ -148,6 +151,23 @@ function ShelfBookItem({ book }: { book: ShelfBook }) {
           </p>
         </div>
         <ShelfSelect book={book} />
+        {book.shelf === "read" && (
+          <>
+            <RatingInput
+              value={book.rating}
+              onChange={(rating) => setRating(book.workId, rating)}
+            />
+            <label className="block text-sm text-gray-600">
+              Notes
+              <textarea
+                value={book.notes}
+                onChange={(e) => setNotes(book.workId, e.target.value)}
+                rows={2}
+                className="mt-1 block w-full rounded border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 focus:border-gray-500 focus:outline-none"
+              />
+            </label>
+          </>
+        )}
       </div>
     </li>
   );
