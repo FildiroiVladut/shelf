@@ -7,6 +7,7 @@ import {
   type WorkDetails,
 } from "../api/openLibrary.ts";
 import { BookCover } from "../components/BookCover.tsx";
+import { ShelfSelect } from "../components/ShelfSelect.tsx";
 
 const MAX_SUBJECTS = 12;
 
@@ -64,7 +65,7 @@ function BookDetails({ workId }: { workId: string }) {
           size="L"
           className="h-72 w-48"
         />
-        <div className="space-y-1">
+        <div className="space-y-3">
           <h1 className="text-2xl font-bold">{book.title}</h1>
           <p className="text-gray-700">
             {book.authors.length > 0
@@ -74,6 +75,7 @@ function BookDetails({ workId }: { workId: string }) {
           {book.year !== null && (
             <p className="text-gray-500">First published {book.year}</p>
           )}
+          <ShelfSelect book={book} />
         </div>
       </div>
       <WorkSection work={work} />
