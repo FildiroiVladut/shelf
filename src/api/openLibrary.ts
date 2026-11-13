@@ -35,8 +35,10 @@ const SearchDocSchema = z.object({
   number_of_pages_median: z.number().optional(),
 });
 
+// Docs are validated one by one in searchBooks, so a single incomplete
+// record from the community-edited catalog doesn't fail the whole search.
 const SearchResponseSchema = z.object({
-  docs: z.array(SearchDocSchema),
+  docs: z.array(z.unknown()),
 });
 
 export type SearchResult = {
@@ -73,7 +75,14 @@ export async function searchBooks(
     SearchResponseSchema,
     signal,
   );
-  return data.docs.map(toSearchResult);
+  const results: SearchResult[] = [];
+  for (const doc of data.docs) {
+    const parsed = SearchDocSchema.safeParse(doc);
+    if (parsed.success) {
+      results.push(toSearchResult(parsed.data));
+    }
+  }
+  return results;
 }
 
 export function coverUrl(coverId: number, size: "S" | "M" | "L"): string {
