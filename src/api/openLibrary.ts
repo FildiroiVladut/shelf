@@ -85,6 +85,58 @@ export async function searchBooks(
   return results;
 }
 
+const WORK_ID_PATTERN = /^OL\d+W$/;
+
+// The id comes from the URL and ends up inside a search query,
+// so anything that isn't a work id is rejected before any request.
+export function isWorkId(value: string): boolean {
+  return WORK_ID_PATTERN.test(value);
+}
+
+// Returns null for unknown ids and redirected works: both come back
+// from search with no matching doc.
+export async function fetchBookSummary(
+  workId: string,
+  signal?: AbortSignal,
+): Promise<SearchResult | null> {
+  const results = await searchBooks(`key:/works/${workId}`, signal);
+  return results[0] ?? null;
+}
+
+const WorkSchema = z.object({
+  description: z
+    .union([z.string(), z.object({ value: z.string() })])
+    .optional()
+    .transform((description) => {
+      if (description === undefined) return null;
+      return typeof description === "string" ? description : description.value;
+    }),
+  subjects: z.array(z.string()).optional(),
+});
+
+export type WorkDetails = {
+  description: string | null;
+  subjects: string[];
+};
+
+export async function fetchWork(
+  workId: string,
+  signal?: AbortSignal,
+): Promise<WorkDetails> {
+  const work = await fetchJson(
+    `${BASE_URL}/works/${workId}.json`,
+    WorkSchema,
+    signal,
+  );
+  // Machine tags such as "nyt:trade-fiction-paperback=2021-11-07"
+  // are not meant for readers.
+  const subjects = (work.subjects ?? []).filter((s) => !s.includes(":"));
+  return {
+    description: work.description,
+    subjects: [...new Set(subjects)],
+  };
+}
+
 export function coverUrl(coverId: number, size: "S" | "M" | "L"): string {
   return `${COVERS_URL}/b/id/${coverId}-${size}.jpg`;
 }
