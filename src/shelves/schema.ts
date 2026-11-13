@@ -25,3 +25,4 @@ export const ShelfBookSchema = z.object({
   notes: z.string(),
 });
 export type ShelfBook = z.infer<typeof ShelfBookSchema>;
+export type Rating = NonNullable<ShelfBook["rating"]>;
