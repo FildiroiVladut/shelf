@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import { searchBooks } from "../api/openLibrary.ts";
 import { BookCover } from "../components/BookCover.tsx";
 import { useDebouncedValue } from "../hooks/useDebouncedValue.ts";
+import { SHELF_LABELS } from "../shelves/schema.ts";
+import { useShelves } from "../shelves/useShelves.ts";
 
 const MIN_QUERY_LENGTH = 2;
 const DEBOUNCE_MS = 300;
@@ -34,6 +36,8 @@ export function SearchPage() {
 }
 
 function SearchResults({ query }: { query: string }) {
+  const { books } = useShelves();
+  const shelfByWorkId = new Map(books.map((b) => [b.workId, b.shelf]));
   const enabled = query.length >= MIN_QUERY_LENGTH;
   const search = useQuery({
     queryKey: ["search", query],
@@ -81,32 +85,40 @@ function SearchResults({ query }: { query: string }) {
 
   return (
     <ul className="divide-y divide-gray-200 rounded border border-gray-200 bg-white">
-      {search.data.map((book) => (
-        <li key={book.workId}>
-          <Link
-            to={`/book/${book.workId}`}
-            className="flex gap-3 p-3 hover:bg-gray-50"
-          >
-            <BookCover
-              coverId={book.coverId}
-              title={book.title}
-              size="M"
-              className="h-18 w-12"
-            />
-            <div className="min-w-0">
-              <p className="font-semibold">{book.title}</p>
-              <p className="text-sm text-gray-600">
-                {book.authors.length > 0
-                  ? book.authors.join(", ")
-                  : "Unknown author"}
-              </p>
-              {book.year !== null && (
-                <p className="text-sm text-gray-500">{book.year}</p>
-              )}
-            </div>
-          </Link>
-        </li>
-      ))}
+      {search.data.map((book) => {
+        const shelf = shelfByWorkId.get(book.workId);
+        return (
+          <li key={book.workId}>
+            <Link
+              to={`/book/${book.workId}`}
+              className="flex gap-3 p-3 hover:bg-gray-50"
+            >
+              <BookCover
+                coverId={book.coverId}
+                title={book.title}
+                size="M"
+                className="h-18 w-12"
+              />
+              <div className="min-w-0">
+                <p className="font-semibold">{book.title}</p>
+                <p className="text-sm text-gray-600">
+                  {book.authors.length > 0
+                    ? book.authors.join(", ")
+                    : "Unknown author"}
+                </p>
+                {book.year !== null && (
+                  <p className="text-sm text-gray-500">{book.year}</p>
+                )}
+                {shelf !== undefined && (
+                  <p className="mt-1 inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700">
+                    {SHELF_LABELS[shelf]}
+                  </p>
+                )}
+              </div>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }

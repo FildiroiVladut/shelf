@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import "./index.css";
 import { App } from "./App.tsx";
+import { ShelvesProvider } from "./shelves/ShelvesProvider.tsx";
 
 // Open Library is a free non-profit API: book data rarely changes,
 // so cache generously and retry only once.
@@ -20,7 +21,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <App />
+        <ShelvesProvider>
+          <App />
+        </ShelvesProvider>
       </BrowserRouter>
     </QueryClientProvider>
   </StrictMode>,
