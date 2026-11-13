@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { ShelvesContext, type BookSnapshot } from "./ShelvesContext.ts";
-import type { ShelfId } from "./schema.ts";
+import type { Rating, ShelfId } from "./schema.ts";
 import { loadShelves, saveShelves } from "./storage.ts";
 
 export function ShelvesProvider({ children }: { children: ReactNode }) {
@@ -58,8 +58,27 @@ export function ShelvesProvider({ children }: { children: ReactNode }) {
     setBooks((prev) => prev.filter((b) => b.workId !== workId));
   }
 
+  // Rating and notes belong to finished books only.
+  function setRating(workId: string, rating: Rating | null) {
+    setBooks((prev) =>
+      prev.map((b) =>
+        b.workId === workId && b.shelf === "read" ? { ...b, rating } : b,
+      ),
+    );
+  }
+
+  function setNotes(workId: string, notes: string) {
+    setBooks((prev) =>
+      prev.map((b) =>
+        b.workId === workId && b.shelf === "read" ? { ...b, notes } : b,
+      ),
+    );
+  }
+
   return (
-    <ShelvesContext value={{ books, addBook, moveBook, removeBook }}>
+    <ShelvesContext
+      value={{ books, addBook, moveBook, removeBook, setRating, setNotes }}
+    >
       {children}
     </ShelvesContext>
   );
