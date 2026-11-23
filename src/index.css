@@ -15,4 +15,21 @@
   --color-shelf-want: #b5a48f;
   --color-shelf-reading: #d9a441;
   --color-shelf-read: #5e8c6a;
+
+  --color-highlight: #d9a441;
+  --color-calm: #d7e2d6;
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-pop: 6px 6px 0 var(--color-ink);
+  --shadow-pop-sm: 3px 3px 0 var(--color-ink);
+  --shadow-pop-accent: 6px 6px 0 var(--color-accent);
+}
+
+@utility marker {
+  background: linear-gradient(
+    transparent 58%,
+    var(--color-highlight) 58% 92%,
+    transparent 92%
+  );
 }
