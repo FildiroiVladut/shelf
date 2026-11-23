@@ -21,7 +21,7 @@ export function RatingInput({ value, onChange }: RatingInputProps) {
             // Clicking the current rating clears it.
             onClick={() => onChange(value === rating ? null : rating)}
             className={`px-0.5 text-2xl leading-none hover:text-amber-400 ${
-              filled ? "text-amber-500" : "text-gray-300"
+              filled ? "text-amber-500" : "text-line"
             }`}
           >
             ★
