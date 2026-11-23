@@ -9,8 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
+    "format": "prettier . --write --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .git/info/exclude",
+    "format:check": "prettier . --check --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .git/info/exclude",
     "test": "vitest",
     "test:run": "vitest run"
   },
