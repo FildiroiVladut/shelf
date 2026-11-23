@@ -17,7 +17,7 @@
 
 ## Checklist
 
-- [ ] Lint, typecheck and build pass locally
+- [ ] Lint, typecheck, tests and build pass locally
 - [ ] Loading, error and empty states are handled (UI changes)
 - [ ] No secrets, no leftover `console.log`
-- [ ] README / ARCHITECTURE.md / `.env.example` updated if needed
+- [ ] README updated if needed
