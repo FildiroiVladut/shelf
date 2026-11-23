@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@theme {
+  --color-page: #fbf6ef;
+  --color-surface: #ffffff;
+  --color-ink: #2d2a26;
+  --color-muted: #756c62;
+  --color-line: #eadfd2;
+
+  /* #c2603a fails AA contrast with white text, so text and buttons use the darker shade. */
+  --color-accent: #a14d2d;
+  --color-accent-hover: #853e23;
+  --color-accent-bright: #c2603a;
+
+  --color-shelf-want: #b5a48f;
+  --color-shelf-reading: #d9a441;
+  --color-shelf-read: #5e8c6a;
+}
