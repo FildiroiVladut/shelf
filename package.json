@@ -1,7 +1,7 @@
 {
   "name": "shelf",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -42,5 +42,8 @@
     "typescript-eslint": "^8.72.1",
     "vite": "^8.3.6",
     "vitest": "^5.1.1"
-  }
+  },
+  "description": "Reading tracker built on the Open Library API",
+  "author": "Vladimir Roi",
+  "license": "MIT"
 }
