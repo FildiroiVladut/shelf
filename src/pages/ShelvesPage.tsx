@@ -56,7 +56,7 @@ export function ShelvesPage() {
     return (
       <div className="space-y-2">
         <h1 className="text-2xl font-bold">My shelves</h1>
-        <p className="text-gray-600">
+        <p className="text-muted">
           Your shelves are empty.{" "}
           <Link to="/" className="underline">
             Search for a book
@@ -89,7 +89,7 @@ export function ShelvesPage() {
                 type="button"
                 aria-pressed={filter === f}
                 onClick={() => setFilter(f)}
-                className="rounded-full border border-gray-300 bg-white px-3 py-1 text-sm hover:bg-gray-100 aria-pressed:border-gray-800 aria-pressed:bg-gray-800 aria-pressed:text-white"
+                className="rounded-full border border-line bg-surface px-3 py-1 text-sm hover:bg-page aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-white"
               >
                 {f === "all" ? "All" : SHELF_LABELS[f]} ({count})
               </button>
@@ -101,7 +101,7 @@ export function ShelvesPage() {
           <select
             value={sortKey}
             onChange={handleSortChange}
-            className="rounded border border-gray-300 bg-white px-2 py-1 focus:border-gray-500 focus:outline-none"
+            className="rounded border border-line bg-surface px-2 py-1 focus:border-accent focus:outline-none"
           >
             {SortKeySchema.options.map((key) => (
               <option key={key} value={key}>
@@ -113,9 +113,9 @@ export function ShelvesPage() {
       </div>
 
       {visible.length === 0 ? (
-        <p className="text-gray-600">Nothing on this shelf yet.</p>
+        <p className="text-muted">Nothing on this shelf yet.</p>
       ) : (
-        <ul className="divide-y divide-gray-200 rounded border border-gray-200 bg-white">
+        <ul className="divide-y divide-line rounded border border-line bg-surface">
           {visible.map((book) => (
             <ShelfBookItem key={book.workId} book={book} />
           ))}
@@ -144,7 +144,7 @@ function ShelfBookItem({ book }: { book: ShelfBook }) {
           >
             {book.title}
           </Link>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted">
             {book.authors.length > 0
               ? book.authors.join(", ")
               : "Unknown author"}
@@ -157,13 +157,13 @@ function ShelfBookItem({ book }: { book: ShelfBook }) {
               value={book.rating}
               onChange={(rating) => setRating(book.workId, rating)}
             />
-            <label className="block text-sm text-gray-600">
+            <label className="block text-sm text-muted">
               Notes
               <textarea
                 value={book.notes}
                 onChange={(e) => setNotes(book.workId, e.target.value)}
                 rows={2}
-                className="mt-1 block w-full rounded border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 focus:border-gray-500 focus:outline-none"
+                className="mt-1 block w-full rounded border border-line bg-surface px-3 py-2 text-base text-ink focus:border-accent focus:outline-none"
               />
             </label>
           </>

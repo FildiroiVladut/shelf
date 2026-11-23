@@ -32,7 +32,7 @@ export function StatsPage() {
     return (
       <div className="space-y-2">
         <h1 className="text-2xl font-bold">Stats</h1>
-        <p className="text-gray-600">
+        <p className="text-muted">
           Finish a book to see your stats.{" "}
           <Link to="/shelves" className="underline">
             Go to my shelves
@@ -80,18 +80,16 @@ export function StatsPage() {
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Top authors</h2>
         {authors.length > 0 ? (
-          <ol className="divide-y divide-gray-200 rounded border border-gray-200 bg-white">
+          <ol className="divide-y divide-line rounded border border-line bg-surface">
             {authors.map(({ author, count }) => (
               <li key={author} className="flex justify-between gap-3 px-3 py-2">
                 <span className="min-w-0 truncate">{author}</span>
-                <span className="shrink-0 text-gray-600">
-                  {bookCount(count)}
-                </span>
+                <span className="shrink-0 text-muted">{bookCount(count)}</span>
               </li>
             ))}
           </ol>
         ) : (
-          <p className="text-gray-600">No author data for your read books.</p>
+          <p className="text-muted">No author data for your read books.</p>
         )}
       </section>
     </div>
@@ -106,10 +104,10 @@ type StatTileProps = {
 
 function StatTile({ label, value, note }: StatTileProps) {
   return (
-    <div className="rounded border border-gray-200 bg-white p-4">
-      <dt className="text-sm text-gray-600">{label}</dt>
+    <div className="rounded border border-line bg-surface p-4">
+      <dt className="text-sm text-muted">{label}</dt>
       <dd className="text-3xl font-semibold">{value}</dd>
-      {note !== undefined && <dd className="text-sm text-gray-500">{note}</dd>}
+      {note !== undefined && <dd className="text-sm text-muted">{note}</dd>}
     </div>
   );
 }
@@ -121,7 +119,7 @@ function MonthlyChart({ data }: { data: MonthCount[] }) {
     <figure className="space-y-3">
       {/* The bars are a visual summary; the table below carries the values. */}
       <div aria-hidden="true">
-        <div className="flex h-40 items-end gap-0.5 border-b border-gray-200">
+        <div className="flex h-40 items-end gap-0.5 border-b border-line">
           {data.map((d) => (
             <div
               key={d.month}
@@ -129,11 +127,11 @@ function MonthlyChart({ data }: { data: MonthCount[] }) {
             >
               {d.count > 0 && (
                 <div
-                  className="w-full max-w-6 rounded-t bg-[#2a78d6] group-hover:bg-[#3987e5]"
+                  className="w-full max-w-6 rounded-t bg-accent-bright group-hover:bg-accent"
                   style={{ height: `${(d.count / max) * 100}%` }}
                 />
               )}
-              <span className="pointer-events-none absolute top-0 left-1/2 z-10 hidden -translate-x-1/2 -translate-y-full rounded bg-gray-900 px-2 py-1 text-xs whitespace-nowrap text-white group-hover:block">
+              <span className="pointer-events-none absolute top-0 left-1/2 z-10 hidden -translate-x-1/2 -translate-y-full rounded bg-ink px-2 py-1 text-xs whitespace-nowrap text-white group-hover:block">
                 <strong>{bookCount(d.count)}</strong>{" "}
                 {longMonth.format(monthDate(d.month))}
               </span>
@@ -144,7 +142,7 @@ function MonthlyChart({ data }: { data: MonthCount[] }) {
           {data.map((d) => (
             <span
               key={d.month}
-              className="flex-1 text-center text-[11px] text-gray-500"
+              className="flex-1 text-center text-[11px] text-muted"
             >
               {shortMonth.format(monthDate(d.month))}
             </span>
@@ -153,19 +151,15 @@ function MonthlyChart({ data }: { data: MonthCount[] }) {
       </div>
 
       {max === 0 && (
-        <p className="text-gray-600">
-          No books finished in the last 12 months.
-        </p>
+        <p className="text-muted">No books finished in the last 12 months.</p>
       )}
 
       <details className="text-sm">
-        <summary className="cursor-pointer text-gray-600">
-          Show as table
-        </summary>
+        <summary className="cursor-pointer text-muted">Show as table</summary>
         <table className="mt-2 w-full max-w-xs">
           <caption className="sr-only">Books read per month</caption>
           <thead>
-            <tr className="text-left text-gray-600">
+            <tr className="text-left text-muted">
               <th scope="col" className="py-1 font-normal">
                 Month
               </th>
@@ -176,7 +170,7 @@ function MonthlyChart({ data }: { data: MonthCount[] }) {
           </thead>
           <tbody className="tabular-nums">
             {data.map((d) => (
-              <tr key={d.month} className="border-t border-gray-200">
+              <tr key={d.month} className="border-t border-line">
                 <td className="py-1">{longMonth.format(monthDate(d.month))}</td>
                 <td className="py-1 text-right">{d.count}</td>
               </tr>
