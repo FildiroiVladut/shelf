@@ -4,8 +4,16 @@ import { Link } from "react-router";
 import { searchBooks } from "../api/openLibrary.ts";
 import { BookCover } from "../components/BookCover.tsx";
 import { useDebouncedValue } from "../hooks/useDebouncedValue.ts";
-import { SHELF_LABELS } from "../shelves/schema.ts";
+import { SHELF_LABELS, type ShelfId } from "../shelves/schema.ts";
 import { useShelves } from "../shelves/useShelves.ts";
+
+// Full class names are spelled out so Tailwind can find them when scanning the source.
+// The shelf colors are mid-tones, so they tint the background and the text stays dark for contrast.
+const SHELF_BADGE_CLASSES: Record<ShelfId, string> = {
+  want: "bg-shelf-want/25",
+  reading: "bg-shelf-reading/25",
+  read: "bg-shelf-read/25",
+};
 
 const MIN_QUERY_LENGTH = 2;
 const DEBOUNCE_MS = 300;
@@ -110,7 +118,9 @@ function SearchResults({ query }: { query: string }) {
                   <p className="text-sm text-muted">{book.year}</p>
                 )}
                 {shelf !== undefined && (
-                  <p className="mt-1 inline-block rounded-full bg-line px-2 py-0.5 text-xs text-ink">
+                  <p
+                    className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs text-ink ${SHELF_BADGE_CLASSES[shelf]}`}
+                  >
                     {SHELF_LABELS[shelf]}
                   </p>
                 )}
