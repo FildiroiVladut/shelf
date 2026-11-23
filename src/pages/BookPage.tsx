@@ -34,7 +34,7 @@ function BookDetails({ workId }: { workId: string }) {
 
   if (summary.isPending) {
     return (
-      <p role="status" className="text-gray-600">
+      <p role="status" className="text-muted">
         Loading book…
       </p>
     );
@@ -67,13 +67,13 @@ function BookDetails({ workId }: { workId: string }) {
         />
         <div className="space-y-3">
           <h1 className="text-2xl font-bold">{book.title}</h1>
-          <p className="text-gray-700">
+          <p className="text-muted">
             {book.authors.length > 0
               ? book.authors.join(", ")
               : "Unknown author"}
           </p>
           {book.year !== null && (
-            <p className="text-gray-500">First published {book.year}</p>
+            <p className="text-muted">First published {book.year}</p>
           )}
           <ShelfSelect book={book} />
         </div>
@@ -86,7 +86,7 @@ function BookDetails({ workId }: { workId: string }) {
 function WorkSection({ work }: { work: UseQueryResult<WorkDetails> }) {
   if (work.isPending) {
     return (
-      <p role="status" className="text-gray-600">
+      <p role="status" className="text-muted">
         Loading description…
       </p>
     );
@@ -109,9 +109,9 @@ function WorkSection({ work }: { work: UseQueryResult<WorkDetails> }) {
       <section className="space-y-2">
         <h2 className="text-lg font-semibold">Description</h2>
         {description !== null ? (
-          <p className="whitespace-pre-line text-gray-800">{description}</p>
+          <p className="whitespace-pre-line text-ink">{description}</p>
         ) : (
-          <p className="text-gray-600">No description available.</p>
+          <p className="text-muted">No description available.</p>
         )}
       </section>
       <section className="space-y-2">
@@ -121,14 +121,14 @@ function WorkSection({ work }: { work: UseQueryResult<WorkDetails> }) {
             {subjects.slice(0, MAX_SUBJECTS).map((subject) => (
               <li
                 key={subject}
-                className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+                className="rounded-full bg-line px-3 py-1 text-sm text-ink"
               >
                 {subject}
               </li>
             ))}
           </ul>
         ) : (
-          <p className="text-gray-600">No subjects listed.</p>
+          <p className="text-muted">No subjects listed.</p>
         )}
       </section>
     </>
@@ -149,7 +149,7 @@ function LoadError({ message, retrying, onRetry }: LoadErrorProps) {
         type="button"
         onClick={onRetry}
         disabled={retrying}
-        className="rounded border border-gray-300 bg-white px-3 py-1 hover:bg-gray-100 disabled:opacity-50"
+        className="rounded border border-line bg-surface px-3 py-1 hover:bg-page disabled:opacity-50"
       >
         {retrying ? "Retrying…" : "Try again"}
       </button>
@@ -161,7 +161,7 @@ function BookNotFound() {
   return (
     <div className="space-y-2">
       <h1 className="text-2xl font-bold">Book not found</h1>
-      <p className="text-gray-600">
+      <p className="text-muted">
         This book doesn’t exist or has moved.{" "}
         <Link to="/" className="underline">
           Search for another book

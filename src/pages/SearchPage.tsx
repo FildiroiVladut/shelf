@@ -4,8 +4,16 @@ import { Link } from "react-router";
 import { searchBooks } from "../api/openLibrary.ts";
 import { BookCover } from "../components/BookCover.tsx";
 import { useDebouncedValue } from "../hooks/useDebouncedValue.ts";
-import { SHELF_LABELS } from "../shelves/schema.ts";
+import { SHELF_LABELS, type ShelfId } from "../shelves/schema.ts";
 import { useShelves } from "../shelves/useShelves.ts";
+
+// Full class names are spelled out so Tailwind can find them when scanning the source.
+// The shelf colors are mid-tones, so they tint the background and the text stays dark for contrast.
+const SHELF_BADGE_CLASSES: Record<ShelfId, string> = {
+  want: "bg-shelf-want/25",
+  reading: "bg-shelf-reading/25",
+  read: "bg-shelf-read/25",
+};
 
 const MIN_QUERY_LENGTH = 2;
 const DEBOUNCE_MS = 300;
@@ -27,7 +35,7 @@ export function SearchPage() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Title or author"
           autoComplete="off"
-          className="w-full rounded border border-gray-300 bg-white px-3 py-2 focus:border-gray-500 focus:outline-none"
+          className="w-full rounded border border-line bg-surface px-3 py-2 focus:border-accent focus:outline-none"
         />
       </div>
       <SearchResults query={debouncedQuery} />
@@ -47,7 +55,7 @@ function SearchResults({ query }: { query: string }) {
 
   if (!enabled) {
     return (
-      <p className="text-gray-600">
+      <p className="text-muted">
         Type at least {MIN_QUERY_LENGTH} characters to search.
       </p>
     );
@@ -55,7 +63,7 @@ function SearchResults({ query }: { query: string }) {
 
   if (search.isPending) {
     return (
-      <p role="status" className="text-gray-600">
+      <p role="status" className="text-muted">
         Searching…
       </p>
     );
@@ -71,7 +79,7 @@ function SearchResults({ query }: { query: string }) {
           type="button"
           onClick={() => void search.refetch()}
           disabled={search.isFetching}
-          className="rounded border border-gray-300 bg-white px-3 py-1 hover:bg-gray-100 disabled:opacity-50"
+          className="rounded border border-line bg-surface px-3 py-1 hover:bg-page disabled:opacity-50"
         >
           {search.isFetching ? "Retrying…" : "Try again"}
         </button>
@@ -80,18 +88,18 @@ function SearchResults({ query }: { query: string }) {
   }
 
   if (search.data.length === 0) {
-    return <p className="text-gray-600">No books found for “{query}”.</p>;
+    return <p className="text-muted">No books found for “{query}”.</p>;
   }
 
   return (
-    <ul className="divide-y divide-gray-200 rounded border border-gray-200 bg-white">
+    <ul className="divide-y divide-line rounded border border-line bg-surface">
       {search.data.map((book) => {
         const shelf = shelfByWorkId.get(book.workId);
         return (
           <li key={book.workId}>
             <Link
               to={`/book/${book.workId}`}
-              className="flex gap-3 p-3 hover:bg-gray-50"
+              className="flex gap-3 p-3 hover:bg-page"
             >
               <BookCover
                 coverId={book.coverId}
@@ -101,16 +109,18 @@ function SearchResults({ query }: { query: string }) {
               />
               <div className="min-w-0">
                 <p className="font-semibold">{book.title}</p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-muted">
                   {book.authors.length > 0
                     ? book.authors.join(", ")
                     : "Unknown author"}
                 </p>
                 {book.year !== null && (
-                  <p className="text-sm text-gray-500">{book.year}</p>
+                  <p className="text-sm text-muted">{book.year}</p>
                 )}
                 {shelf !== undefined && (
-                  <p className="mt-1 inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700">
+                  <p
+                    className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs text-ink ${SHELF_BADGE_CLASSES[shelf]}`}
+                  >
                     {SHELF_LABELS[shelf]}
                   </p>
                 )}

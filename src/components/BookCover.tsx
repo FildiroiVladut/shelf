@@ -12,7 +12,7 @@ export function BookCover({ coverId, title, size, className }: BookCoverProps) {
     return (
       <div
         aria-hidden="true"
-        className={`${className} shrink-0 rounded bg-gray-200`}
+        className={`${className} shrink-0 rounded bg-line`}
       />
     );
   }
@@ -22,7 +22,7 @@ export function BookCover({ coverId, title, size, className }: BookCoverProps) {
       src={coverUrl(coverId, size)}
       alt={`Cover of ${title}`}
       loading="lazy"
-      className={`${className} shrink-0 rounded bg-gray-200 object-cover`}
+      className={`${className} shrink-0 rounded bg-line object-cover`}
     />
   );
 }
