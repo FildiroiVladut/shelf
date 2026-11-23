@@ -25,7 +25,7 @@ export function ShelfSelect({ book }: { book: BookSnapshot }) {
         aria-label="Shelf"
         value={current?.shelf ?? ""}
         onChange={handleChange}
-        className="rounded border border-gray-300 bg-white px-3 py-2 focus:border-gray-500 focus:outline-none"
+        className="rounded border border-line bg-surface px-3 py-2 focus:border-accent focus:outline-none"
       >
         {current === undefined && (
           <option value="" disabled>
@@ -42,7 +42,7 @@ export function ShelfSelect({ book }: { book: BookSnapshot }) {
         <button
           type="button"
           onClick={() => removeBook(book.workId)}
-          className="rounded border border-gray-300 bg-white px-3 py-2 hover:bg-gray-100"
+          className="rounded border border-line bg-surface px-3 py-2 hover:bg-page"
         >
           Remove from shelves
         </button>
